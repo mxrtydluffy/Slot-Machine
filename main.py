@@ -67,6 +67,7 @@ def print_slot_machine(columns):
     which is the number of elements in each columns.
     - Enumerate gives the index as well as the item.
     - len(columns) - 1 is the maximum index we have to access an element in the columns list.
+    - "end" tells print statement what to end the line with since it's orignially \n
     """
 
     for row in range(len(columns[0])):
@@ -75,10 +76,9 @@ def print_slot_machine(columns):
         for i, column in enumerate(columns):
             # For every row we loop through every column
             if i != len(columns) - 1:
-                print(column[row], "|")
+                print(column[row], end =" | ")
             else:
-                print(column[row])
-
+                print(column[row], end="")
 
 def deposit():
 
