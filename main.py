@@ -22,7 +22,7 @@ symbols_count = {
     "D": 8
 }
 
-def get_slot_machine_spin(row, cols, symbols):
+def get_slot_machine_spin(rows, cols, symbols):
 
     """
     For example
@@ -40,6 +40,44 @@ def get_slot_machine_spin(row, cols, symbols):
     for symbol, symbol_count, in symbols.items():
         for _ in range(symbol_count):
             all_symbols.append(symbol)
+
+    # Here we select what values go in every single column.
+    # Here each nested list represents values of the column.
+
+    columns = []
+    # For every column we must generate a certain number of symbols.
+    # Generated a column for every single column that is present.
+    for _ in range(cols):
+        column = []
+        # Making a copy instead of using all_symbols because it will include values removed.
+        current_symbols = all_symbols[:] # <- Copies list ":"
+        for _ in range(rows):
+            value = random.choice(current_symbols)
+            current_symbols.remove(value) # <- Finds first instance of values of the list and removes it so it's not picked again.
+            column.append(value) # <- Add values to our column
+
+        columns.append(column) # <- Add columns to columns list.
+
+    return columns
+
+def print_slot_machine(columns):
+    
+    """
+    Need to determine the number of rows based on the columns
+    which is the number of elements in each columns.
+    - Enumerate gives the index as well as the item.
+    - len(columns) - 1 is the maximum index we have to access an element in the columns list.
+    """
+
+    for row in range(len(columns[0])):
+        # Print value that is at the first row of that column
+        # loop through every single row
+        for i, column in enumerate(columns):
+            # For every row we loop through every column
+            if i != len(columns) - 1:
+                print(column[row], "|")
+            else:
+                print(column[row])
 
 
 def deposit():
@@ -107,5 +145,9 @@ def main():
             break
 
     print(f'You are betting {bet} on {lines} lines. Total bet is equal to: {total_bet}')
+
+    # slots is initally columns
+    slots = get_slot_machine_spin(ROWS, COLS, symbols_count)
+    print_slot_machine(slots)
 
 main()
