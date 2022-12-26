@@ -1,7 +1,46 @@
+import random
+
 # Global constant
 MAX_LINES = 3
 MAX_BET = 100
 MIN_BET = 1
+
+ROWS = 3
+COLS = 3
+
+#Symbols
+"""
+Each reel has...
+A - represents most valueable
+then going to the lowest.
+"""
+
+symbols_count = {
+    "A": 2,
+    "B": 4,
+    "C": 6,
+    "D": 8
+}
+
+def get_slot_machine_spin(row, cols, symbols):
+
+    """
+    For example
+    - In symbol count "A" is symbol and its symbol_count
+    will return 2. Symbols.items() will look for items in the list.
+    For loop loops through the symbol_count and then stores it in
+    all_symbols.
+
+    Instead of putting i put _ is inserted because its an annoymous variable
+    that doesn't care about the count and then you't don't have
+    an unused variable.
+    """
+
+    all_symbols = []
+    for symbol, symbol_count, in symbols.items():
+        for _ in range(symbol_count):
+            all_symbols.append(symbol)
+
 
 def deposit():
 
