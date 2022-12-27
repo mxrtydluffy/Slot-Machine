@@ -31,6 +31,7 @@ symbols_value = {
 }
 
 def check_winnings(columns, lines, bet, values):
+    
     """
     Need to look at the rows the user bets on.
     - line will equal to 0
@@ -43,15 +44,16 @@ def check_winnings(columns, lines, bet, values):
     - "for column in columns" | Since we know the symbol we're going to check, we need to
     loop through every single column and check or that symbol
         - For each column "symbol_to_check" is assigned to the column at the current row that we are
-        looking at. Ex.) row 0 lookinga t row 0, row 1, looking at row 1
+        looking at. Ex.) row 0 looking you are at row 0, row 1, looking at row 1.
         - We then check is the symbols are the not same (if symbol !=) "symbol_to_check" if they are not
         the same we break out which means it checks the next line "for line in range(lines)" since user didn't
         win. If they are the same it doesn't break and once the for loop is completed we didn't break out since 
-        the symbols are the same. The else statement is executed the user won which is the miltipler values[symbol]
+        the symbols are the same. The else statement is executed since the user won which is the miltipler values[symbol]
         times the bet on each line not total bet. Can win on one line but lose on the other.
     """
-    
-    winnings = 0 
+
+    winnings = 0
+    winnings_lines = []
     for line in range(lines):
         symbol = columns[0][line]
         for column in columns:
@@ -60,8 +62,9 @@ def check_winnings(columns, lines, bet, values):
                 break
         else:
             winnings += values[symbol] * bet
+            winnings_lines.append(line +1)
     
-    return winnings
+    return winnings, winnings_lines # <- Total amount user won & what lines user won
 
 def get_slot_machine_spin(rows, cols, symbols):
 
@@ -168,7 +171,7 @@ def get_bet():
             if MIN_BET <= amount <= MAX_BET:
                 break
             else:
-                print(f"Amount must be between {MIN_BET} - {MAX_BET}.")
+                print(f"Amount must be between ${MIN_BET} - ${MAX_BET}.")
         else:
             print("Please enter a number.")
 
@@ -184,14 +187,17 @@ def main():
         total_bet = bet * lines
 
         if total_bet > balance:
-            print("You do not have enought to bet that amount! Your current balance is: {balance}")
+            print(f"You do not have enough to bet that amount! Your current balance is: ${balance}")
         else:
             break
 
-    print(f'You are betting {bet} on {lines} lines. Total bet is equal to: {total_bet}')
+    print(f'You are betting {bet} on {lines} lines. Total bet is equal to: ${total_bet}')
 
     # slots is initally columns
     slots = get_slot_machine_spin(ROWS, COLS, symbols_count)
     print_slot_machine(slots)
+    winnings, winning_lines = check_winnings(slots, lines, bet, symbols_value)
+    print(f'You won ${winnings}.')
+    print(f'You won on lines:', *winning_lines)   # "*" is a splat operator is is going to pass every single line from the winning line list to the print function
 
 main()
