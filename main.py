@@ -10,7 +10,7 @@ COLS = 3
 
 #Symbols
 """
-Each reel has...
+What each reel has
 A - represents most valueable
 then going to the lowest.
 """
@@ -38,7 +38,7 @@ def check_winnings(columns, lines, bet, values):
     - Column is set to 0 because the columns is set but not the rows.
     ____________________________________________________________________
     
-    - #46 First (for line in range(lines) we loop through every row and check what the user bets on.
+    - First (for line in range(lines) we loop through every row and check what the user bets on.
     - Then the symbol we are checking (symbol = columns[0][line]) is whatever symbol is on the first column of the
     current row sice the symbols need to be the same.
     - "for column in columns" | Since we know the symbol we're going to check, we need to
@@ -137,7 +137,7 @@ def deposit():
     """
 
     while True:
-        amount = input("How much would you like to deposit? $")
+        amount = input("How much would you like to deposit? \n$")
         if amount.isdigit():
             amount = int(amount)
             if amount > 0:
@@ -151,21 +151,21 @@ def deposit():
 
 def get_number_of_lines():
     while True:
-        lines = input("Enter the number on lines to bet on (1-" + str(MAX_LINES) + ")? ")
+        lines = input("Enter the number on lines to bet on (1-" + str(MAX_LINES) + ")! \n")
         if lines.isdigit():
             lines = int(lines)
             if 1 <= lines <= MAX_LINES:
                 break
             else:
-                print("Enter a valid number of lines.")
+                print("Enter a valid number of lines.\n")
         else:
-            print("Please enter a number.")
+            print("Please enter a number.\n")
 
     return lines
 
 def get_bet():
     while True:
-        amount = input("How much would you like to bet? $")
+        amount = input("How much would you like to bet? \n$")
         if amount.isdigit():
             amount = int(amount)
             if MIN_BET <= amount <= MAX_BET:
@@ -173,7 +173,7 @@ def get_bet():
             else:
                 print(f"Amount must be between ${MIN_BET} - ${MAX_BET}.")
         else:
-            print("Please enter a number.")
+            print("Please enter a number.\n")
 
     return amount
 
@@ -191,19 +191,19 @@ def spin(balance):
         total_bet = bet * lines
 
         if total_bet > balance:
-            print(f"You do not have enough to bet that amount! Your current balance is: ${balance}")
+            print(f"You do not have enough to bet that amount! Your current balance is: ${balance}\n")
         else:
             break
 
-    print(f'You are betting {bet} on {lines} lines. Total bet is equal to: ${total_bet}')
+    print(f'You are betting {bet} on {lines} lines. Total bet is equal to: ${total_bet}\n')
 
     # slots is initally columns
     slots = get_slot_machine_spin(ROWS, COLS, symbols_count)
     print_slot_machine(slots)
     winnings, winning_lines = check_winnings(slots, lines, bet, symbols_value)
-    print(f'You won ${winnings}.')
+    print(f'You won ${winnings}!!!')
     print(f'You won on lines:', *winning_lines)   # "*" is a splat operator is is going to pass every single line from the winning line list to the print function
-    return winning_lines - total_bet    # <- Tells how much user won or lost from this spin.
+    return winnings - total_bet    # <- Tells how much user won or lost from this spin.
 
 
 def main():
@@ -215,6 +215,6 @@ def main():
             break
         balance += spin(balance)
 
-    print(f"You are left with ${balance}")
+    print(f"You are left with ${balance}\n")
 
 main()
