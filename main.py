@@ -22,6 +22,47 @@ symbols_count = {
     "D": 8
 }
 
+# Determining how much the value of each symbol
+symbols_value = {
+    "A": 5,
+    "B": 4,
+    "C": 3,
+    "D": 2
+}
+
+def check_winnings(columns, lines, bet, values):
+    """
+    Need to look at the rows the user bets on.
+    - line will equal to 0
+    - Column is set to 0 because the columns is set but not the rows.
+    ____________________________________________________________________
+    
+    - #46 First (for line in range(lines) we loop through every row and check what the user bets on.
+    - Then the symbol we are checking (symbol = columns[0][line]) is whatever symbol is on the first column of the
+    current row sice the symbols need to be the same.
+    - "for column in columns" | Since we know the symbol we're going to check, we need to
+    loop through every single column and check or that symbol
+        - For each column "symbol_to_check" is assigned to the column at the current row that we are
+        looking at. Ex.) row 0 lookinga t row 0, row 1, looking at row 1
+        - We then check is the symbols are the not same (if symbol !=) "symbol_to_check" if they are not
+        the same we break out which means it checks the next line "for line in range(lines)" since user didn't
+        win. If they are the same it doesn't break and once the for loop is completed we didn't break out since 
+        the symbols are the same. The else statement is executed the user won which is the miltipler values[symbol]
+        times the bet on each line not total bet. Can win on one line but lose on the other.
+    """
+    
+    winnings = 0 
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            symbol_to_check = column[line]
+            if symbol != symbol_to_check:
+                break
+        else:
+            winnings += values[symbol] * bet
+    
+    return winnings
+
 def get_slot_machine_spin(rows, cols, symbols):
 
     """
@@ -79,6 +120,9 @@ def print_slot_machine(columns):
                 print(column[row], end =" | ")
             else:
                 print(column[row], end="")
+            
+        # Every row needs to go down to the next line.
+        print()
 
 def deposit():
 
